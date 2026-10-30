@@ -1,0 +1,32 @@
+name: Kostenloses Wochenraetsel aktualisieren
+on:
+  schedule:
+    - cron: "21 5 * * 1"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: nordcode-weekly
+  cancel-in-progress: false
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Generate original weekly puzzle
+        run: python tools/make_weekly.py
+      - name: Verify generated page and solution
+        run: python -m unittest discover -s tests -v
+      - name: Commit the new public puzzle
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add wochenraetsel.html
+          if ! git diff --cached --quiet; then
+            git commit -m "content: neues kostenloses Wochenraetsel"
+            git push
+          fi
