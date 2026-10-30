@@ -1,32 +1,35 @@
 # NORDCODE Rätselstudio
 
-Eigenständiges digitales Mikroprodukt, neu aufgebaut am 30.10.2026.
+## Status 30.10.2026
 
-- Originale druckbare Escape-Spiele für Familien
-- Gratis-Mission im Browser
-- Mobile-first, keine externen JS-Frameworks oder Trackingdienste
-- Öffentliche Demo: https://kitz-labs.github.io/nordcode-raetselstudio/
-- Kostenlose Infrastruktur: GitHub Pages + öffentliche GitHub Actions
-- Das käufliche PDF-Paket liegt **nicht** in diesem öffentlichen Repository
-- Checkout: **absichtlich deaktiviert**, solange sichere und verlässliche Auslieferung sowie Compliance nicht nachgewiesen sind
-- Vertraglicher Betreiber: AI Kitz Art & Labs e.U. (bestehendes Unternehmen)
+- Neues, eigenständiges Produkt (keine vorhandenen KI/Spotify/Web-Template-Dienstleistungen).
+- Website: https://kitz-labs.github.io/nordcode-raetselstudio/
+- Kostenloses interaktives Demo-Rätsel funktioniert; Lösung 8.
+- GitHub Pages: öffentlich ausgeliefert; alle HTML- und Rechteseiten HTTP 200.
+- Kostenloses Wochenrätsel: GitHub-Actions-Workflow manuell mit **success** getestet und für Montag eingeplant.
+- Bezahlprodukt **Rettet den Nordstern**: privates, lokal gesichertes ZIP mit 12-seitigem Spiel und 3-seitigem Lösungsheft erstellt und auf Integrität sowie Lösungslogik geprüft.
+- Payhip Free: Verkäuferkonto angelegt, digitale ZIP-Datei samt eigenem Cover hochgeladen.
+- Payhip-Produktlink (vorerst unsichtbar): https://payhip.com/b/NSIgO
+- Kaufpreis 9,90 EUR, einmalig.
+- **Noch keine Sales**. Payhip-/Stripe-Zahlungsverbindung erfordert Abschluss der Stripe-OAuth-Anmeldung mit dem Kontoinhaber. Produkt bis dahin unsichtbar; Kaufbutton der Website deaktiviert.
+- Payhip Free: 0 EUR/Monat + 5 % Payhip-Gebühr pro Verkauf plus Zahlungsgebühren (aktuelle Bedingungen vor Livegang prüfen).
+- Rechtliche Seiten vorhanden; finale Verbraucherrechts-/Steuerprüfung vor Freischaltung.
+- Keine Käuferdaten und keine Stripe API-Keys im GitHub-Repository.
+- Ziel: sichere automatische Checkout-Auslieferung von Payhip und messbare organische Konversion nach Stripe-Freigabe.
 
-## Betrieb
+## Automatisierung
 
-Die öffentliche Website wird über GitHub Pages ausgeliefert. Der Workflow .github/workflows/wochenraetsel.yml generiert automatisch jede Woche ein neues kostenloses Originalrätsel aus einer geprüften Rechenlogik. Hierzu sind weder KI-API-Keys noch bezahlte Dienste notwendig.
+GitHub Actions führt einmal pro Woche (Montag) `tools/make_weekly.py` aus und aktualisiert die öffentliche Gratis-Rätselseite. Der Workflow ist getestet und benötigt keine kostenpflichtige KI. Die separate tägliche ChatGPT-Automation kontrolliert Umsatz und technische Verfügbarkeit, soweit die verbundenen Werkzeuge zugänglich sind.
 
-## Qualitätschecks
-- Seitenstruktur & Links per grep/curl
-- iPhone-Viewport, responsives CSS
-- Code-Eingabe im Demo mit 8 -> erfolgreich, mit anderen Ziffern -> Fehlertext
-- Puzzle-Pack-Lösungen automatisiert gegen Spielgenerator geprüft
-- Checkout bleibt deaktiviert bis Auslieferung verifiziert ist
+## Sicheres Go-Live-Gate
 
-## Business
-Testpreis 9,90 € pro einmaligem Familien-PDF-Paket. Stripe Standardkarten AT derzeit 1,5 % + 0,25 € je erfolgreicher Zahlung; weitere Gebühren sind möglich. Umsätze sind nicht garantiert. In Deutschland/Österreich geltende Verbraucher- und Steuerpflichten beachten.
+1. Stripe-Login und OAuth-Verbindung in Payhip im vorhandenen Safari-Tab abschließen (keine Passwörter in Chats).
+2. In Payhip `Settings → Payment Details` den verbundenen Stripe-Account kontrollieren, ohne Kontodaten offenzulegen.
+3. Produktdownload und Endpreis durch den **offiziellen** Payhip-Testcheckout prüfen; keine Echtgeld-Testkäufe zu Lasten der Person.
+4. Widerspruchsfreie steuerliche und rechtliche Texte sowie Endpreis prüfen.
+5. Produkt in Payhip sichtbar stellen. Dann Website-Kaufbutton auf https://payhip.com/b/NSIgO aktivieren.
+6. Verfügbarkeit von Website und Checkout über Smartphone prüfen. Eine erste reale Bestellung nur nach Stripe-Beleg als Umsatz verbuchen.
 
 ## Sicherheit
-Keine Secrets in Git. Kein Käuferdatenspeicher im Frontend. Keine automatisierten Spam-Mails. Kein Datenbezug zum Bankkonto des Projektinhabers. Bei späterer Zahlung: Stripe Checkout/Payment Links, signierte Webhooks und sichere Auslieferung vor Live-Schaltung.
 
-## Status
-Website & Demo lauffähig; Produkt im privaten lokalen Projektverzeichnis generiert. Echtgeld-Verkauf wird erst nach verifizierter Auslieferung und Compliance aktiviert.
+Es dürfen keine produktiven Zahlungen, Stripe-API-Credentials, privaten Puzzle-ZIP-Dateien, Passwörter oder Kundenlisten im GitHub-Repo gespeichert werden. Die passwortgeschützte Payhip-Kontoanmeldung liegt im macOS-Schlüsselbund auf dem eigenen Mac.
