@@ -28,6 +28,8 @@ class TestWeekly(unittest.TestCase):
         self.assertIn(str(p["week"])+"/"+str(p["year"]),text)
         self.assertIn("n==="+str(p["result"]),text)
         self.assertIn("Impressum",text)
+        self.assertIn('property="og:image"',text)
+        self.assertIn('https://wa.me/?text=',text)
 
 if __name__=="__main__":
     unittest.main()
