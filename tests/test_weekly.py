@@ -30,6 +30,8 @@ class TestWeekly(unittest.TestCase):
         self.assertIn("Impressum",text)
         self.assertIn('property="og:image"',text)
         self.assertIn('https://wa.me/?text=',text)
+        self.assertIn('Kostenloses Rätsel zum Ausdrucken',text)
+        self.assertIn('onclick="window.print()"',text)
 
 if __name__=="__main__":
     unittest.main()
