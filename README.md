@@ -1,17 +1,17 @@
 # NORDCODE Rätselstudio
 
-## Status 02.11.2026
+## Status 04.11.2026
 
 - Neues, eigenständiges Produkt (keine vorhandenen KI/Spotify/Web-Template-Dienstleistungen).
 - Website: https://kitz-labs.github.io/nordcode-raetselstudio/
 - Kostenloses interaktives Demo-Rätsel funktioniert; Lösung 8.
 - GitHub Pages: öffentlich ausgeliefert; alle HTML- und Rechteseiten HTTP 200.
-- Kostenloses Wochenrätsel: manueller GitHub-Actions-Lauf am 02.11.2026 mit **success** (inkl. Tests). KW 45/2026 ist live. Montags-Schedule am 02.11. wurde nicht ausgelöst; dienstags ist jetzt ein kostenloser Fallback-Termin vorgesehen. Ein regulärer Zeitplanlauf ist weiterhin nicht bestätigt.
+- Kostenloses Wochenrätsel: **reguläre Zeitplanläufe am 02.11. und 03.11.2026 erfolgreich** (Generator und Tests). KW 45/2026 ist live. Ein separater Dienstags-Fallback sichert den Wochenplan ab; der nächste Wochenwechsel bleibt zu beobachten.
 - Bezahlprodukt **Rettet den Nordstern**: privates, lokal gesichertes ZIP mit 12-seitigem Spiel und 3-seitigem Lösungsheft erstellt und auf Integrität sowie Lösungslogik geprüft.
 - Payhip Free: Verkäuferkonto angelegt, digitale ZIP-Datei samt eigenem Cover hochgeladen.
 - Payhip-Produktlink (vorerst unsichtbar): https://payhip.com/b/NSIgO
 - Kaufpreis 9,90 EUR, einmalig.
-- **0 bezahlte Bestellungen / 0,00 EUR Umsatz (02.11.2026)** in Payhip Customers und Analytics read-only geprüft; Auszahlungsdaten nicht separat verifiziert. Payhip-/Stripe-Zahlungsverbindung erfordert Abschluss der Stripe-OAuth-Anmeldung mit dem Kontoinhaber. Produkt bis dahin unsichtbar; Kaufbutton der Website deaktiviert.
+- **0 bezahlte Bestellungen / 0,00 EUR Umsatz (04.11.2026)** in Payhip Customers und Analytics read-only geprüft; Auszahlungshistorie nicht separat verifiziert. Payhip zeigt weder Stripe noch PayPal verbunden. Produkt bis dahin unsichtbar; Kaufbutton der Website deaktiviert.
 - Payhip Free: 0 EUR/Monat + 5 % Payhip-Gebühr pro Verkauf plus Zahlungsgebühren (aktuelle Bedingungen vor Livegang prüfen).
 - Rechtliche Seiten vorhanden; finale Verbraucherrechts-/Steuerprüfung vor Freischaltung.
 - Keine Käuferdaten und keine Stripe API-Keys im GitHub-Repository.

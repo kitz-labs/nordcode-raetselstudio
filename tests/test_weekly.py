@@ -32,6 +32,8 @@ class TestWeekly(unittest.TestCase):
         self.assertIn('https://wa.me/?text=',text)
         self.assertIn('Kostenloses Rätsel zum Ausdrucken',text)
         self.assertIn('onclick="window.print()"',text)
+        self.assertIn('href="./#paket"',text)
+        self.assertIn('Der Verkauf startet erst nach geprüfter Zahlung und Auslieferung.',text)
 
 if __name__=="__main__":
     unittest.main()
