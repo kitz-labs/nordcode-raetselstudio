@@ -4,6 +4,7 @@ from datetime import date
 from pathlib import Path
 from html import escape
 import argparse
+import re
 ROOT = Path(__file__).resolve().parents[1]
 def puzzle(when):
     iso=when.isocalendar()
@@ -18,6 +19,18 @@ def generate(when=date.today()):
     d=puzzle(when)
     body=f'''<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Kostenloses Rätsel zum Ausdrucken für Kinder – KW {d["week"]}/{d["year"]} | NORDCODE</title><meta name="description" content="Kostenloses Rätsel zum Ausdrucken für Kinder ab 8 Jahren. Jede Woche ein neues Familienrätsel, kostenlos und ohne Anmeldung."><link rel="stylesheet" href="styles.css"><link rel="canonical" href="https://kitz-labs.github.io/nordcode-raetselstudio/wochenraetsel.html"><meta property="og:type" content="website"><meta property="og:locale" content="de_AT"><meta property="og:title" content="NORDCODE – kostenloses Wochenrätsel KW {d["week"]}/{d["year"]}"><meta property="og:description" content="Kostenloses Familienrätsel – jede Woche neu, ohne Anmeldung."><meta property="og:url" content="https://kitz-labs.github.io/nordcode-raetselstudio/wochenraetsel.html"><meta property="og:image" content="https://kitz-labs.github.io/nordcode-raetselstudio/assets/nordcode-cover.png"><meta name="twitter:card" content="summary"></head><body><header class="topbar"><a href="./" class="brand">✳ NORDCODE</a><nav><a href="./">Start</a><a href="demo.html">Probemission</a></nav></header><main class="shell simple-main"><span class="eyebrow">DAS KOSTENLOSE WOCHENRÄTSEL · KW {d["week"]}/{d["year"]}</span><h1>Die Laternenwerkstatt</h1><p>Dieses kostenlose Rätsel kannst du online lösen oder für einen Rätselabend mit Kindern ausdrucken.</p><p>In der Sternenstadt stehen <strong>{d["red"]} rote Laternen</strong> und genau doppelt so viele goldene. Der Wind bläst <strong>{d["removed"]} Laternen</strong> aus. Wie viele bleiben an?</p><div class="card"><p>So findest du die Antwort: zuerst die goldenen Laternen zählen, dann die roten addieren und die erloschenen abziehen.</p><label for="weekly">Deine Antwort</label><div class="answer-box"><input id="weekly" inputmode="numeric" maxlength="1" aria-describedby="feedback"><button class="button primary" id="solve">Antwort prüfen</button></div><p id="feedback" role="status" aria-live="polite"></p><details><summary>Hinweis anzeigen</summary><p class="hint">Goldene: {d["red"]} × 2 = {d["gold"]}. Dann alle zusammenzählen.</p></details></div><button type="button" class="button outline no-print" onclick="window.print()">Gratis ausdrucken / als PDF speichern</button><a href="demo.html" class="button outline">Nächste Gratismission ↗</a><p class="no-print">Noch mehr Rätselspaß? Entdecke unser Familien-Abenteuer mit sieben Missionen. Der Verkauf startet erst nach geprüfter Zahlung und Auslieferung.</p><a href="./#paket" class="button outline no-print">7-Missionen-Paket ansehen ↗</a><a class="button outline no-print" href="https://wa.me/?text=%F0%9F%A7%A9%20NORDCODE%20Wochenr%C3%A4tsel%20kostenlos%20l%C3%B6sen%3A%20https%3A%2F%2Fkitz-labs.github.io%2Fnordcode-raetselstudio%2Fwochenraetsel.html" target="_blank" rel="noopener noreferrer">Freiwillig mit Freunden teilen ↗</a></main><footer><div class="shell foot"><div class="brand">✳ NORDCODE</div><div class="foot-links"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a></div></div></footer><script>document.querySelector("#solve").addEventListener("click",()=>{{const n=Number(document.querySelector("#weekly").value);document.querySelector("#feedback").textContent=n==={d["result"]}?"Richtig! Diese Woche hast du das Licht gerettet. ✦":"Noch nicht – prüfe das Ergebnis deiner Rechnung.";}});</script></body></html>'''
     (ROOT/"wochenraetsel.html").write_text(body,encoding="utf-8")
+    # Keep the weekly sitemap date accurate for search crawlers, without changing other URLs.
+    sitemap_path = ROOT / "sitemap.xml"
+    if sitemap_path.exists():
+        sitemap = sitemap_path.read_text(encoding="utf-8")
+        target = "https://kitz-labs.github.io/nordcode-raetselstudio/wochenraetsel.html"
+        pattern = r"(<url>\s*<loc>" + re.escape(target) + r"</loc>)(?:\s*<lastmod>\d{4}-\d{2}-\d{2}</lastmod>)?(\s*</url>)"
+        monday = date.fromisocalendar(d["year"], d["week"], 1).isoformat()
+        updated, count = re.subn(pattern, lambda m: m.group(1) + f"<lastmod>{monday}</lastmod>" + m.group(2), sitemap)
+        if count != 1:
+            raise ValueError("Weekly puzzle URL not found exactly once in sitemap.xml")
+        if updated != sitemap:
+            sitemap_path.write_text(updated, encoding="utf-8")
     return d
 if __name__=="__main__":
     parser=argparse.ArgumentParser()
