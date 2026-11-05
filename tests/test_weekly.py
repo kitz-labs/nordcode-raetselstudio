@@ -35,5 +35,35 @@ class TestWeekly(unittest.TestCase):
         self.assertIn('href="./#paket"',text)
         self.assertIn('Der Verkauf startet erst nach geprüfter Zahlung und Auslieferung.',text)
 
+
+    def test_sitemap_weekly_lastmod_is_idempotent_and_updates_on_new_week(self):
+        previous_root = mod.ROOT
+        with TemporaryDirectory() as folder:
+            try:
+                mod.ROOT = Path(folder)
+                path = Path(folder) / "sitemap.xml"
+                path.write_text(
+                    '<?xml version="1.0" encoding="utf-8"?>\n'
+                    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+                    '<url><loc>https://kitz-labs.github.io/nordcode-raetselstudio/</loc></url>\n'
+                    '<url><loc>https://kitz-labs.github.io/nordcode-raetselstudio/wochenraetsel.html</loc></url>\n'
+                    '</urlset>', encoding="utf-8"
+                )
+                mod.generate(date(2026, 11, 2))
+                first = path.read_text(encoding="utf-8")
+                self.assertIn("<lastmod>2026-11-02</lastmod>", first)
+                mod.generate(date(2026, 11, 3))
+                self.assertEqual(first, path.read_text(encoding="utf-8"))
+                mod.generate(date(2026, 11, 9))
+                self.assertIn("<lastmod>2026-11-09</lastmod>", path.read_text(encoding="utf-8"))
+                self.assertNotIn("<lastmod>2026-11-02</lastmod>", path.read_text(encoding="utf-8"))
+            finally:
+                mod.ROOT = previous_root
+
+    def test_checkout_remains_disabled_without_verified_gateway(self):
+        index = (Path(__file__).resolve().parents[1] / "index.html").read_text(encoding="utf-8")
+        self.assertRegex(index, r'<button[^>]*id="buy-button"[^>]*disabled')
+        self.assertIn("Der Bezahlvorgang wird erst aktiviert", index)
+
 if __name__=="__main__":
     unittest.main()
