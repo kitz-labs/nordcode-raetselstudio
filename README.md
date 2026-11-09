@@ -19,7 +19,7 @@
 
 ## Automatisierung
 
-GitHub Actions plant den Wochenrätsel-Generator montags um 05:21 UTC und als Absicherung dienstags um 08:37 UTC. Der Generator committet nur bei Inhaltsänderung. Die Wochenrätselseite enthält eine Open-Graph-Linkvorschau und einen freiwilligen Teilen-Link, der Nachrichten nicht automatisch versendet. Der Workflow ist getestet und benötigt keine kostenpflichtige KI. Die separate tägliche ChatGPT-Automation kontrolliert Umsatz und technische Verfügbarkeit, soweit die verbundenen Werkzeuge zugänglich sind.
+GitHub Actions plant den Wochenrätsel-Generator montags um 05:21 UTC, einen zweiten idempotenten Montagsversuch um 12:19 UTC (seit 09.11.2026) und als weitere Absicherung dienstags um 08:37 UTC. Hintergrund: GitHub kann geplante Läufe verzögern; der zusätzliche Versuch ist noch nicht als erfolgreich ausgeführt bestätigt. Der Generator committet nur bei Inhaltsänderung. Die Wochenrätselseite enthält eine Open-Graph-Linkvorschau und einen freiwilligen Teilen-Link, der Nachrichten nicht automatisch versendet. Der Workflow ist getestet und benötigt keine kostenpflichtige KI. Die separate tägliche ChatGPT-Automation kontrolliert Umsatz und technische Verfügbarkeit, soweit die verbundenen Werkzeuge zugänglich sind.
 
 ## Sicheres Go-Live-Gate
 
