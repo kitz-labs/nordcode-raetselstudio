@@ -2,6 +2,7 @@ name: Kostenloses Wochenraetsel aktualisieren
 on:
   schedule:
     - cron: "21 5 * * 1" # Monday primary (UTC)
+    - cron: "19 12 * * 1" # Monday second chance if the primary GitHub schedule is delayed (UTC)
     - cron: "37 8 * * 2" # Tuesday fallback (UTC)
   workflow_dispatch:
 permissions:
