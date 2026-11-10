@@ -1,6 +1,6 @@
 # NORDCODE Rätselstudio
 
-## Status 04.11.2026
+## Basisstatus 04.11.2026 (historisch)
 
 - Neues, eigenständiges Produkt (keine vorhandenen KI/Spotify/Web-Template-Dienstleistungen).
 - Website: https://kitz-labs.github.io/nordcode-raetselstudio/
@@ -17,9 +17,18 @@
 - Keine Käuferdaten und keine Stripe API-Keys im GitHub-Repository.
 - Ziel: sichere automatische Checkout-Auslieferung von Payhip und messbare organische Konversion nach Stripe-Freigabe.
 
+## Aktuelle Technikprüfung 10.11.2026
+
+- **KW 46/2026 im Repository aktualisiert**, Sitemap-Datum 09.11.2026.
+- Zwei geplante Wochenrätsel-Läufe vom **09.11.2026 erfolgreich**, inklusive Generator, Tests und Commit-Prüfung: [erster Lauf](https://github.com/kitz-labs/nordcode-raetselstudio/actions/runs/42630721618), [zweiter Lauf](https://github.com/kitz-labs/nordcode-raetselstudio/actions/runs/42710994052). Der zweite Lauf wurde von GitHub verzögert ausgeführt.
+- [GitHub-Pages-Deployment vom 09.11.](https://github.com/kitz-labs/nordcode-raetselstudio/actions/runs/42630742086) erfolgreich. Eine erneute HTTP-Abfrage der öffentlichen Website war am 10.11.2026 aufgrund nicht verfügbarer Browser- bzw. DNS-Verbindung nicht möglich; Erfolg des Deployments ist kein direkter HTTP-Nachweis.
+- Interne Qualitätssicherung um `tests/test_discoverability.py` ergänzt: Sitemap, Canonical-Tags, interne Links zu Gratisangeboten und Wochenrätsel-Datum. Die neue Testdatei wird beim nächsten Workflow-Testlauf mit ausgeführt; **noch kein CI-Nachweis für diese neue Datei**.
+- Payhip-Konto am 10.11. wegen nicht verfügbarer Safari-Verbindung **nicht erneut lesbar**. Letzter belegter Kontostand bleibt **0 Verkäufe / 0,00 EUR Umsatz vom 04.11.2026**; neue Verkäufe und Auszahlungen seither unbekannt. Kein Liveverkauf freigegeben.
+- Kostenlose Wachstumsoption: Die Kindergeburtstag-Schatzsuche auch direkt auf der Wochenrätselseite intern verlinken, um Besucher ohne Werbung zu einem zweiten Gratisangebot zu führen. Öffentlich noch nicht geändert.
+
 ## Automatisierung
 
-GitHub Actions plant den Wochenrätsel-Generator montags um 05:21 UTC, einen zweiten idempotenten Montagsversuch um 12:19 UTC (seit 09.11.2026) und als weitere Absicherung dienstags um 08:37 UTC. Hintergrund: GitHub kann geplante Läufe verzögern; der zusätzliche Versuch ist noch nicht als erfolgreich ausgeführt bestätigt. Der Generator committet nur bei Inhaltsänderung. Die Wochenrätselseite enthält eine Open-Graph-Linkvorschau und einen freiwilligen Teilen-Link, der Nachrichten nicht automatisch versendet. Der Workflow ist getestet und benötigt keine kostenpflichtige KI. Die separate tägliche ChatGPT-Automation kontrolliert Umsatz und technische Verfügbarkeit, soweit die verbundenen Werkzeuge zugänglich sind.
+GitHub Actions plant den Wochenrätsel-Generator montags um 05:21 UTC, einen zweiten idempotenten Montagsversuch um 12:19 UTC (seit 09.11.2026) und als weitere Absicherung dienstags um 08:37 UTC. Hintergrund: GitHub kann geplante Läufe verzögern; der zusätzliche Montagsversuch lief am 09.11.2026 erfolgreich (durch GitHub verzögert). Der Generator committet nur bei Inhaltsänderung. Die Wochenrätselseite enthält eine Open-Graph-Linkvorschau und einen freiwilligen Teilen-Link, der Nachrichten nicht automatisch versendet. Der Workflow ist getestet und benötigt keine kostenpflichtige KI. Die separate tägliche ChatGPT-Automation kontrolliert Umsatz und technische Verfügbarkeit, soweit die verbundenen Werkzeuge zugänglich sind.
 
 ## Sicheres Go-Live-Gate
 
