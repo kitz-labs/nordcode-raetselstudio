@@ -33,6 +33,7 @@ class TestWeekly(unittest.TestCase):
         self.assertIn('Kostenloses Rätsel zum Ausdrucken',text)
         self.assertIn('onclick="window.print()"',text)
         self.assertIn('href="./#paket"',text)
+        self.assertIn('href="kindergeburtstag.html"',text)
         self.assertIn('Der Verkauf startet erst nach geprüfter Zahlung und Auslieferung.',text)
 
 
