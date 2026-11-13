@@ -37,9 +37,12 @@ class TestWeeklyFreshness(unittest.TestCase):
         self.assertEqual(entries[0].findtext(NS + "lastmod"), expected)
 
     def test_iso_week_53_still_produces_a_valid_answer(self):
-        from importlib.machinery import SourceFileLoader
+        from importlib.util import module_from_spec, spec_from_file_location
         source = ROOT / "tools" / "make_weekly.py"
-        generator = SourceFileLoader("nordcode_weekly_53", str(source)).load_module()
+        spec = spec_from_file_location("nordcode_weekly_53", source)
+        self.assertIsNotNone(spec)
+        generator = module_from_spec(spec)
+        spec.loader.exec_module(generator)
         puzzle = generator.puzzle(date.fromisocalendar(2026, 53, 1))
         self.assertEqual((puzzle["year"], puzzle["week"]), (2026, 53))
         self.assertTrue(1 <= puzzle["result"] <= 9)
