@@ -37,7 +37,7 @@ class TestDiscoverability(unittest.TestCase):
                 html = (ROOT / filename).read_text(encoding="utf-8")
                 title_match = re.search(r"<title>([^<]+)</title>", html, re.I)
                 description_match = re.search(
-                    r'<meta\\s+name="description"\\s+content="([^"]+)"', html, re.I
+                    r'<meta\s+name="description"\s+content="([^"]+)"', html, re.I
                 )
                 self.assertIsNotNone(title_match, "Missing search result title")
                 self.assertIsNotNone(description_match, "Missing search result description")
@@ -47,7 +47,7 @@ class TestDiscoverability(unittest.TestCase):
                 self.assertTrue(70 <= len(description) <= 180, "Description should explain the free offer")
                 self.assertRegex(
                     (title + " " + description).lower(),
-                    r"\\b(?:kostenlos\\w*|gratis)\\b",
+                    r"\b(?:kostenlos\w*|gratis)\b",
                     "Free entry pages should clearly identify their free offer",
                 )
                 self.assertNotIn(title, titles, "Duplicate organic search title")
