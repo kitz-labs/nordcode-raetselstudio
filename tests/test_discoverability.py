@@ -28,6 +28,33 @@ class TestDiscoverability(unittest.TestCase):
                 self.assertIn(f'rel="canonical" href="{canonical}"', html)
                 self.assertIn('name="description"', html)
 
+    def test_free_search_snippets_are_unique(self):
+        """Prevent duplicate snippets that weaken free organic landing pages."""
+        titles = set()
+        descriptions = set()
+        for filename in PAGES:
+            with self.subTest(page=filename):
+                html = (ROOT / filename).read_text(encoding="utf-8")
+                title_match = re.search(r"<title>([^<]+)</title>", html, re.I)
+                description_match = re.search(
+                    r'<meta\\s+name="description"\\s+content="([^"]+)"', html, re.I
+                )
+                self.assertIsNotNone(title_match, "Missing search result title")
+                self.assertIsNotNone(description_match, "Missing search result description")
+                title = title_match.group(1).strip()
+                description = description_match.group(1).strip()
+                self.assertTrue(20 <= len(title) <= 90, "Title should be human-readable")
+                self.assertTrue(70 <= len(description) <= 180, "Description should explain the free offer")
+                self.assertRegex(
+                    (title + " " + description).lower(),
+                    r"\\b(?:kostenlos\\w*|gratis)\\b",
+                    "Free entry pages should clearly identify their free offer",
+                )
+                self.assertNotIn(title, titles, "Duplicate organic search title")
+                self.assertNotIn(description, descriptions, "Duplicate organic search description")
+                titles.add(title)
+                descriptions.add(description)
+
     def test_homepage_reaches_all_free_entry_points(self):
         homepage = (ROOT / "index.html").read_text(encoding="utf-8")
         for url_path in ("demo.html", "wochenraetsel.html", "kindergeburtstag.html"):
